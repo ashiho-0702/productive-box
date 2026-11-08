@@ -1,26 +1,27 @@
 name: productive-box
 on:
   schedule:
-    # 定时：每天北京时间早上8点跑一次（cron是UTC时间！！UTC=北京时间-8h）
-    # 北京时间 08:00 → UTC 00:00，写成 0 0 * * *
     - cron: '0 0 * * *'
-  # 可选：支持手动点按钮触发测试，非常推荐加上！
   workflow_dispatch:
 
 env:
-  TIMEZONE: Asia/Shanghai  # 重点！中国时区，不要默认UTC
+  TIMEZONE: Asia/Shanghai
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      # 直接安装依赖，不再读取requirements.txt
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install requests python-dotenv
+
       - name: Run productive-box
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
