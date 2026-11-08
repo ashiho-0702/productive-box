@@ -18,7 +18,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      # 直接安装依赖，不再读取requirements.txt
       - name: Install dependencies
         run: pip install requests python-dotenv
 
@@ -26,4 +25,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
-        run: python main.py
+        run: python productive_box.py
